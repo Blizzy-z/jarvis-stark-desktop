@@ -5,12 +5,14 @@ Stark-inspired artwork, a phone-friendly layout and ChatGPT-plan sign-in.
 
 ## Install on Windows
 
-Download **JARVIS-Stark-Setup-1.1.0.exe** from the
-[latest release](https://github.com/Blizzy-z/jarvis-stark-desktop/releases/latest), run it, and open JARVIS.
+Download **JARVIS-Stark-Setup-1.2.0.exe** from the
+[latest release](https://github.com/Blizzy-z/jarvis-stark-desktop/releases/latest), run it, and JARVIS installs and opens automatically.
 The installer bundles Electron and all application dependencies. No separate
 Node.js, npm, Python, LM Studio, GPU, or local-model download is required.
 Windows x64 only. The installer is currently unsigned.
 
+- One-click per-user installation with desktop and Start menu shortcuts.
+- Custom JARVIS icon for the installer, shortcuts, tray and app.
 - Starts fullscreen. **F11** toggles fullscreen; **Esc** leaves it.
 - Closing the window keeps JARVIS running in the system tray for phone access.
 - Use the tray menu's **Quit JARVIS** to stop it.
@@ -26,6 +28,11 @@ and credit-use settings at [ChatGPT usage](https://chatgpt.com/settings/usage).
 renderer isolation, and mocked sign-in/pairing/refresh/stream tests passed.
 Real account authorization and subscription inference still require live testing
 with the user's account. Physical microphone and playback are not yet verified.
+
+## Calling
+
+Phone calling is not included yet. Its delivery method (real phone number versus
+in-app ringing) and trigger need to be selected before implementation.
 
 ## Phone access
 

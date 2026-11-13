@@ -1,7 +1,7 @@
 {
   "name": "jarvis-stark-desktop",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "type": "commonjs",
   "scripts": {
     "start": "node server.cjs",
@@ -41,15 +41,19 @@
     ],
     "win": {
       "target": "nsis",
-      "signAndEditExecutable": false
+      "signAndEditExecutable": true,
+      "icon": "build/jarvis.ico",
+      "signExecutable": false
     },
     "nsis": {
-      "oneClick": false,
+      "oneClick": true,
       "perMachine": false,
-      "allowToChangeInstallationDirectory": true,
+      "allowToChangeInstallationDirectory": false,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "runAfterFinish": false
+      "runAfterFinish": true,
+      "installerIcon": "build/jarvis.ico",
+      "uninstallerIcon": "build/jarvis.ico"
     },
     "artifactName": "JARVIS-Stark-Setup-${version}.${ext}"
   }
