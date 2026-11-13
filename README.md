@@ -5,7 +5,7 @@ Stark-inspired artwork, a phone-friendly layout and ChatGPT-plan sign-in.
 
 ## Install on Windows
 
-Download **JARVIS-Stark-Setup-1.2.0.exe** from the
+Download **JARVIS-Stark-Setup-1.3.0.exe** from the
 [latest release](https://github.com/Blizzy-z/jarvis-stark-desktop/releases/latest), run it, and JARVIS installs and opens automatically.
 The installer bundles Electron and all application dependencies. No separate
 Node.js, npm, Python, LM Studio, GPU, or local-model download is required.
@@ -102,3 +102,19 @@ Modifications add desktop packaging, mobile layout, custom artwork, browser voic
 ChatGPT-plan sign-in and phone pairing. This project is not affiliated with
 OpenAI, Marvel, or the OpenJarvis maintainers. Third-party trademarks and artwork
 are not relicensed by the software license.
+
+
+## Guided phone calling (1.3.0)
+
+After ChatGPT sign-in, open **Phone calls**. JARVIS provides five setup steps with optional read-aloud help, credential fields, a connection check, calling enable/pause, and an explicit test-call button. Twilio credentials are stored in a separate Windows DPAPI vault, never in the frontend or repository.
+
+Provide a Twilio Account SID/Auth Token, a voice-enabled Twilio number, your destination number in E.164 format, and a public HTTPS callback origin. Twilio calls, speech recognition and number rental are separate from ChatGPT plan usage. Trial destination restrictions may apply. No provider account is created or purchased by the installer.
+
+The callback-only server listens on loopback port 3015. Forward ONLY this port through a public HTTPS tunnel; keep app port 3014 private. For Tailscale, an unused Funnel endpoint can be configured with `tailscale funnel --bg --https=8443 3015`. Complete the Tailscale authorization prompt and paste its printed HTTPS origin into setup. Stop that endpoint with `tailscale funnel --https=8443 off`. Do not overwrite an existing endpoint. Private Tailscale Serve alone is not reachable by Twilio. See [Tailscale Funnel](https://tailscale.com/docs/reference/tailscale-cli/funnel).
+
+Phone conversations use Twilio speech Gather/Say and the connected ChatGPT text model: speak, pause, then hear a short reply. They use the provider's voice, not the local Qwen clone. Press 1 to end; silence ends the call. Replies do not execute device actions or create reminders. Call recording is not enabled; conversation text is held in memory during the call, sent to the AI provider, and removed afterward. Twilio processes audio and may retain provider-side logs according to account settings. Callback signatures are checked using the configured public URL and token.
+
+Wake-ups and reminders are one-off dated schedules in the laptop's local time, persisted across app restarts. Urgent events expose a secret POST URL to connect to an external event source; monitoring other applications is not automatically configured. Keep event URLs secret. Calls are limited to ten per rolling day, one active call, ten minutes, twenty conversation turns, and one urgent trigger per hour per event. The laptop must be awake and JARVIS running. More-than-five-minute overdue schedules are marked missed; failed attempts are not retried automatically. Pause calling to prevent new calls (does not terminate an existing call).
+
+Validation: mocked outbound provider/signature/turn/schedule/event tests and production build. Real provider account sign-in, billing, network callback delivery, and live phone audio require setup and an explicit test call on the recipient's laptop. This is not an emergency monitoring or emergency calling service.
+

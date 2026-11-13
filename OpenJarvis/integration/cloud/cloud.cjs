@@ -109,6 +109,8 @@ function createCloud({storage, port=3014, remoteOrigin='', standalone=false, fet
     }catch(e){if(!res.destroyed){if(res.headersSent){send({error:{message:controller.signal.aborted?'Reply stopped or timed out.':e.message}});res.end();}else fail(res,502,'ChatGPT request failed. Reconnect or try again.');}}
     finally{clearTimeout(timer);res.off('close',abort);running.delete(p.id);}
   }));
-  return {router,modelsFor:async(req)=>profile(req)?.tokens?models(profile(req)):[]};
+  function phoneAccess(req,res,next){if(!local(req)||!profile(req)?.tokens)return fail(res,403,'Open phone setup on the signed-in laptop.');req.jarvisProfile=profile(req).id;next();}
+  async function phoneReply(id,model,context,messages){const p=state.profiles[id];const r=await request(API+'/responses',{method:'POST',signal:AbortSignal.timeout(10000),headers:{Authorization:'Bearer '+await credentials(p),'Content-Type':'application/json'},body:JSON.stringify({model:model.replace(/^chatgpt\//,''),store:false,stream:false,max_output_tokens:160,instructions:'You are JARVIS speaking on a phone call. Answer in one or two short sentences. Do not claim to perform actions or schedule things. The reason for calling is: '+context,input:messages})});if(!r.ok)throw Error('AI unavailable');const b=await r.json();const answer=(b.output||[]).flatMap(o=>o.content||[]).filter(c=>c.type==='output_text').map(c=>c.text).join(' ');if(!answer)throw Error('Empty reply');return answer.slice(0,1200);}
+  return {router,phoneAccess,phoneReply,modelsFor:async(req)=>profile(req)?.tokens?models(profile(req)):[]};
 }
 module.exports={createCloud};
