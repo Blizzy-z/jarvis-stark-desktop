@@ -1,0 +1,12 @@
+node_modules/
+releases/
+.tools/
+*.log
+*.dpapi
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+tailscale.json
+OpenJarvis/integration/cloud/public/
+OpenJarvis/src/openjarvis/server/static/

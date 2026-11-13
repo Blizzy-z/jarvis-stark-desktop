@@ -1,0 +1,56 @@
+{
+  "name": "jarvis-stark-desktop",
+  "private": true,
+  "version": "1.1.0",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.cjs",
+    "test": "node --test *.test.cjs",
+    "desktop": "electron .",
+    "dist": "electron-builder --win nsis --x64"
+  },
+  "dependencies": {
+    "express": "5.1.0",
+    "jose": "6.1.3"
+  },
+  "devDependencies": {
+    "electron": "^45.3.1",
+    "electron-builder": "^26.18.0"
+  },
+  "productName": "JARVIS Stark Industries",
+  "description": "JARVIS fullscreen desktop with ChatGPT plan sign-in",
+  "author": "JARVIS personal build",
+  "main": "electron-main.cjs",
+  "build": {
+    "appId": "com.jarvis.stark.friend",
+    "asar": true,
+    "directories": {
+      "output": "../../../releases/electron"
+    },
+    "files": [
+      "electron-main.cjs",
+      "preload.cjs",
+      "server.cjs",
+      "cloud.cjs",
+      "vault.cjs",
+      "public/**/*",
+      "package.json",
+      "README.txt",
+      "NODE-LICENSE",
+      "OPENJARVIS-LICENSE"
+    ],
+    "win": {
+      "target": "nsis",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "runAfterFinish": false
+    },
+    "artifactName": "JARVIS-Stark-Setup-${version}.${ext}"
+  }
+}

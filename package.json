@@ -1,0 +1,12 @@
+{
+  "name": "jarvis-stark-desktop-workspace",
+  "private": true,
+  "version": "1.1.0",
+  "scripts": {
+    "setup": "npm --prefix OpenJarvis/frontend ci && npm --prefix OpenJarvis/integration/cloud ci",
+    "build": "npm --prefix OpenJarvis/frontend run build && node scripts/prepare-desktop.cjs",
+    "desktop": "npm --prefix OpenJarvis/integration/cloud run desktop",
+    "dist": "npm run build && npm --prefix OpenJarvis/integration/cloud run dist",
+    "test": "npm --prefix OpenJarvis/integration/cloud test"
+  }
+}

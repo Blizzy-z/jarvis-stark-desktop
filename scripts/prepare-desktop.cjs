@@ -1,0 +1,1 @@
+const fs=require('node:fs');const path=require('node:path');const root=path.resolve(__dirname,'..');fs.cpSync(path.join(root,'OpenJarvis/src/openjarvis/server/static'),path.join(root,'OpenJarvis/integration/cloud/public'),{recursive:true});
